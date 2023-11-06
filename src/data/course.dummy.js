@@ -1,3 +1,11 @@
+import img1 from "../images/1.jpg";
+import img2 from "../images/2.jpg";
+import img3 from "../images/3.jpg";
+import img4 from "../images/4.jpg";
+import img5 from "../images/5.jpg";
+import img6 from "../images/6.jpg";
+import img7 from "../images/7.jpg";
+import img8 from "../images/8.jpg";
 const courseModel = [
   {
     id: 1,
@@ -6,7 +14,7 @@ const courseModel = [
     description:
       "Learn the basics of React Native development and build your first mobile app.",
     enrollmentStatus: "Open",
-    thumbnail: "your.image.here",
+    thumbnail: img1,
     duration: "8 weeks",
     schedule: "Tuesdays and Thursdays, 6:00 PM - 8:00 PM",
     location: "Online",
@@ -45,8 +53,8 @@ const courseModel = [
     instructor: "Jane Smith",
     description:
       "Master advanced web development techniques and create dynamic web applications.",
-    enrollmentStatus: "Open",
-    thumbnail: "your.another.image.here",
+    enrollmentStatus: "Closed",
+    thumbnail: img2,
     duration: "10 weeks",
     schedule: "Mondays and Wednesdays, 7:00 PM - 9:00 PM",
     location: "In-Person",
@@ -92,8 +100,8 @@ const courseModel = [
     instructor: "Sarah Anderson",
     description:
       "Learn the principles of mobile app design and create user-friendly interfaces.",
-    enrollmentStatus: "Open",
-    thumbnail: "your.yet.another.image.here",
+    enrollmentStatus: "In Progress",
+    thumbnail: img3,
     duration: "6 weeks",
     schedule: "Fridays, 5:00 PM - 7:00 PM",
     location: "Online",
@@ -139,7 +147,7 @@ const courseModel = [
     description:
       "Dive into the world of data science and gain insights from data analysis.",
     enrollmentStatus: "Open",
-    thumbnail: "your.data.science.image.here",
+    thumbnail: img4,
     duration: "12 weeks",
     schedule: "Mondays and Thursdays, 6:30 PM - 8:30 PM",
     location: "Online",
@@ -184,7 +192,7 @@ const courseModel = [
     description:
       "Explore digital marketing techniques to reach and engage your target audience.",
     enrollmentStatus: "Open",
-    thumbnail: "your.digital.marketing.image.here",
+    thumbnail: img5,
     duration: "10 weeks",
     schedule: "Wednesdays and Fridays, 7:00 PM - 9:00 PM",
     location: "Online",
@@ -232,8 +240,8 @@ const courseModel = [
     instructor: "Olivia Johnson",
     description:
       "An introduction to the fundamentals of artificial intelligence and machine learning.",
-    enrollmentStatus: "Open",
-    thumbnail: "your.ai.image.here",
+    enrollmentStatus: "In Progress",
+    thumbnail: img6,
     duration: "9 weeks",
     schedule: "Tuesdays and Thursdays, 6:30 PM - 8:30 PM",
     location: "Online",
@@ -278,7 +286,7 @@ const courseModel = [
     description:
       "Learn how to create interactive and responsive web applications with HTML, CSS, and JavaScript.",
     enrollmentStatus: "Open",
-    thumbnail: "your.frontend.dev.image.here",
+    thumbnail: img7,
     duration: "10 weeks",
     schedule: "Mondays and Wednesdays, 6:00 PM - 8:00 PM",
     location: "In-Person",
@@ -321,8 +329,8 @@ const courseModel = [
     instructor: "Lucas Wilson",
     description:
       "Master the art of digital photography and enhance your photography skills.",
-    enrollmentStatus: "Open",
-    thumbnail: "your.photography.image.here",
+    enrollmentStatus: "Closed",
+    thumbnail: img8,
     duration: "6 weeks",
     schedule: "Saturdays, 10:00 AM - 12:00 PM",
     location: "In-Person",

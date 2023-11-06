@@ -26,7 +26,7 @@ const Navbar = () => {
   const id = open ? "avatar-popover" : undefined;
 
   return (
-    <nav className="bg-blue-400 p-4 px-16">
+    <nav className="bg-blue-400 py-4 sm:px-16 px-6">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex space-x-4 items-center">
           <Link
@@ -40,8 +40,11 @@ const Navbar = () => {
               <NavLink
                 to={page.link}
                 key={page.name}
-                className="text-white hover:text-yellow-500"
-                activeClassName="text-yellow-500"
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "text-yellow-300" : "text-white"
+                  } hover:text-yellow-300 font-semibold`
+                }
               >
                 {page.name}
               </NavLink>

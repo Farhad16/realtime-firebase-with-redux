@@ -1,7 +1,7 @@
 import React from "react";
-import { BusinessCenter } from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+import HdrAutoIcon from "@mui/icons-material/HdrAuto";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -11,15 +11,15 @@ const pages = [
 
 const Footer = () => {
   return (
-    <footer className="bg-blue-400 px-16 py-4 text-white">
-      <div className="container mx-auto flex flex-wrap items-center justify-between">
+    <footer className="bg-blue-400 py-4 text-white sm:px-16 px-6 flex sm:flex-row flex-col items-center">
+      <div className="flex flex-row items-center gap-3 sm:gap-4 flex-1">
         <div className="flex items-center">
-          <BusinessCenter fontSize="large" />
+          <HdrAutoIcon fontSize="large" />
           <Typography variant="h6" component="h2" className="ml-2">
             Alemeno
           </Typography>
         </div>
-        <ul className="flex flex-wrap justify-center space-x-4 my-4 md:my-0">
+        <ul className="flex flex-wrap justify-center gap-2 my-4 md:my-0">
           {pages.map((page) => (
             <li key={page.name}>
               <Link
@@ -31,10 +31,11 @@ const Footer = () => {
             </li>
           ))}
         </ul>
-        <p className="text-center mt-4 md:mt-0">
-          &copy; {new Date().getFullYear()} Alemeno. All rights reserved.
-        </p>
       </div>
+
+      <p className="text-xs">
+        &copy; {new Date().getFullYear()} Alemeno. All rights reserved.
+      </p>
     </footer>
   );
 };

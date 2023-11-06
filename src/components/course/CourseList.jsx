@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import SearchIcon from "@mui/icons-material/Search";
 import SingleCourse from "./SingleCourse";
+import debounce from "lodash/debounce";
+import { CircularProgress } from "@mui/material";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 
 const CourseList = () => {
   const [courseData, setCourseData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { handleSubmit, control } = useForm();
-
-  const onSubmit = (data) => {
-    // Implement your search logic here.
-    console.log(data.search);
-  };
+  const { control } = useForm();
 
   async function fetchData() {
     setIsLoading(true);
@@ -33,7 +32,8 @@ const CourseList = () => {
         return response.json();
       })
       .then((data) => {
-        setCourseData(data);
+        setCourseData(Object.values(data));
+        setFilterData(Object.values(data));
         setIsLoading(false);
       })
       .catch((error) => {
@@ -46,34 +46,65 @@ const CourseList = () => {
     fetchData();
   }, []);
 
+  const filterCourses = debounce((searchQuery) => {
+    if (searchQuery.trim() === "") {
+      setFilterData(courseData);
+    } else {
+      const filtered = courseData.filter(
+        (course) =>
+          course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          course.instructor.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilterData(filtered);
+    }
+  }, 300);
+
   return (
-    <div className="py-10 px-16 flex flex-col items-center gap-6 bg-gray-200">
-      <div className="search-box bg-slate-200 rounded-full px-6 py-3 flex items-center w-full sm:w-1/2">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex items-center">
-            <div className="search-icon">
-              <SearchIcon />
-            </div>
-            <Controller
-              name="searchQuery"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <input
-                  {...field}
-                  type="text"
-                  placeholder="Search"
-                  className="search-input"
-                />
-              )}
-            />
+    <div className="py-10 flex flex-col items-center gap-6">
+      <div className="search-box bg-slate-300 rounded-full px-6 py-3 flex items-center w-full sm:w-1/2">
+        <div className="flex items-center">
+          <div className="search-icon">
+            <SearchIcon />
           </div>
-        </form>
+          <Controller
+            name="searchQuery"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <input
+                {...field}
+                type="text"
+                placeholder="Search"
+                className="search-input"
+                onChange={(e) => {
+                  field.onChange(e);
+                  filterCourses(e.target.value);
+                }}
+              />
+            )}
+          />
+        </div>
       </div>
-      <div className="flex flex-col gap-4 w-full">
-        {Object.values(courseData).map((course) => (
-          <SingleCourse {...course} key={course.id} />
-        ))}
+      <div className="flex flex-col gap-4 w-full items-center justify-center">
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            {filterData.length ? (
+              filterData.map((course) => (
+                <SingleCourse {...course} key={course.id} />
+              ))
+            ) : (
+              <div className="text-center">
+                <SentimentVeryDissatisfiedIcon
+                  fontSize="large"
+                  className="text-gray-400"
+                />
+                <p className="text-gray-600 mt-2">No results found</p>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
