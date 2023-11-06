@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
-import MenuItem from "@mui/material/MenuItem";
 import HdrAutoIcon from "@mui/icons-material/HdrAuto";
+import { handleGoogleLogin, singOut } from "../config/Auth";
+import { useSelector } from "react-redux";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import SettingsIcon from "@mui/icons-material/Settings";
+import LogoutIcon from "@mui/icons-material/Logout";
+import LoginIcon from "@mui/icons-material/Login";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -12,7 +17,8 @@ const pages = [
 ];
 
 const Navbar = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const user = useSelector((state) => state.user);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleAvatarClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,7 +30,7 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
-
+  console.log(user);
   return (
     <nav className="bg-blue-400 py-4 sm:px-16 px-6">
       <div className="container mx-auto flex justify-between items-center">
@@ -54,8 +60,9 @@ const Navbar = () => {
         <div>
           <Avatar
             alt="User Avatar"
-            src="/path-to-your-image.jpg"
+            src={user?.photoURL || ""}
             onClick={handleAvatarClick}
+            className="cursor-pointer"
           />
           <Popover
             id={id}
@@ -71,9 +78,37 @@ const Navbar = () => {
               horizontal: "right",
             }}
           >
-            <MenuItem onClick={handleAvatarClose}>User Email</MenuItem>
-            <MenuItem onClick={handleAvatarClose}>Profile</MenuItem>
-            <MenuItem onClick={handleAvatarClose}>Settings</MenuItem>
+            <div className="flex flex-col p-4 gap-2 font-medium">
+              {user && (
+                <div className="flex flex-col text-sm ml-1">
+                  <p className="font-medium">{user.name}</p>
+                  <p className="text-xs opacity-50">{user.email}</p>
+                </div>
+              )}
+              <p className="text-sm flex gap-2 items-center">
+                <AccountCircleIcon />
+                Profile
+              </p>
+              <p className="text-sm flex gap-2 items-center">
+                <SettingsIcon /> Settings
+              </p>
+              {user ? (
+                <p
+                  className="text-sm flex gap-2 items-center"
+                  onClick={singOut}
+                >
+                  <LogoutIcon />
+                  Logout
+                </p>
+              ) : (
+                <p
+                  className="text-sm flex gap-2 items-center"
+                  onClick={handleGoogleLogin}
+                >
+                  <LoginIcon /> Login
+                </p>
+              )}
+            </div>
           </Popover>
         </div>
       </div>
