@@ -2,8 +2,8 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
-import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
+import HdrAutoIcon from "@mui/icons-material/HdrAuto";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -26,11 +26,14 @@ const Navbar = () => {
   const id = open ? "avatar-popover" : undefined;
 
   return (
-    <nav className="bg-blue-500 p-4">
+    <nav className="bg-blue-400 p-4 px-16">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex space-x-4 items-center">
-          <Link to="/" className="text-white text-lg font-semibold">
-            Your Logo
+          <Link
+            to="/"
+            className="text-white text-lg font-semibold flex items-center gap-2"
+          >
+            <HdrAutoIcon /> <span>Alemeno</span>
           </Link>
           <div className="hidden md:flex space-x-4">
             {pages.map((page) => (
