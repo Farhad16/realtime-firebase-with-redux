@@ -4,11 +4,11 @@ import Avatar from "@mui/material/Avatar";
 import Popover from "@mui/material/Popover";
 import HdrAutoIcon from "@mui/icons-material/HdrAuto";
 import { handleGoogleLogin, singOut } from "../config/Auth";
-import { useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
+import { useSelector } from "react-redux";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -17,7 +17,7 @@ const pages = [
 ];
 
 const Navbar = () => {
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleAvatarClick = (event) => {
@@ -30,7 +30,7 @@ const Navbar = () => {
 
   const open = Boolean(anchorEl);
   const id = open ? "avatar-popover" : undefined;
-  console.log(user);
+
   return (
     <nav className="bg-blue-400 py-4 sm:px-16 px-6">
       <div className="container mx-auto flex justify-between items-center">
@@ -85,16 +85,16 @@ const Navbar = () => {
                   <p className="text-xs opacity-50">{user.email}</p>
                 </div>
               )}
-              <p className="text-sm flex gap-2 items-center">
+              <p className="text-sm flex gap-2 items-center cursor-pointer">
                 <AccountCircleIcon />
                 Profile
               </p>
-              <p className="text-sm flex gap-2 items-center">
+              <p className="text-sm flex gap-2 items-center cursor-pointer">
                 <SettingsIcon /> Settings
               </p>
               {user ? (
                 <p
-                  className="text-sm flex gap-2 items-center"
+                  className="text-sm flex gap-2 items-center cursor-pointer"
                   onClick={singOut}
                 >
                   <LogoutIcon />
@@ -102,7 +102,7 @@ const Navbar = () => {
                 </p>
               ) : (
                 <p
-                  className="text-sm flex gap-2 items-center"
+                  className="text-sm flex gap-2 items-center cursor-pointer"
                   onClick={handleGoogleLogin}
                 >
                   <LoginIcon /> Login

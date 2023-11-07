@@ -1,4 +1,5 @@
 import store from "../store/store";
+import { setUser } from "../store/user/user.slice";
 import { auth, provider } from "./firebase";
 
 export const handleGoogleLogin = () => {
@@ -12,7 +13,8 @@ export const handleGoogleLogin = () => {
         email: user.email,
         photoURL: user.photoURL,
       };
-      store.dispatch({ type: "SET_USER", payload: signedInUser });
+      store.dispatch(setUser(signedInUser));
+      localStorage.setItem("user", JSON.stringify(signedInUser));
     })
     .catch((error) => {
       // Handle errors

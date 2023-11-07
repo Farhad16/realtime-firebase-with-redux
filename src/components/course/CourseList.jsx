@@ -5,52 +5,24 @@ import SingleCourse from "./SingleCourse";
 import debounce from "lodash/debounce";
 import { CircularProgress } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { useSelector } from "react-redux";
 
 const CourseList = () => {
-  const [courseData, setCourseData] = useState([]);
+  const courses = useSelector((state) => state.course.courses);
+  const isLoading = useSelector((state) => state.course.loading);
   const [filterData, setFilterData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setFilterData(courses);
+  }, [courses]);
 
   const { control } = useForm();
 
-  async function fetchData() {
-    setIsLoading(true);
-    await fetch(
-      "https://alemeno-1-default-rtdb.firebaseio.com/courseList.json",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        setIsLoading(false);
-        return response.json();
-      })
-      .then((data) => {
-        setCourseData(Object.values(data));
-        setFilterData(Object.values(data));
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setIsLoading(false);
-      });
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const filterCourses = debounce((searchQuery) => {
     if (searchQuery.trim() === "") {
-      setFilterData(courseData);
+      setFilterData(courses);
     } else {
-      const filtered = courseData.filter(
+      const filtered = courses.filter(
         (course) =>
           course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           course.instructor.toLowerCase().includes(searchQuery.toLowerCase())

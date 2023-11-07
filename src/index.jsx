@@ -7,6 +7,7 @@ import CourseList from "./components/course/CourseList";
 import CourseDetails from "./components/course/CourseDetails";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { fetchCourses } from "./store/course/course.slice";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+store.dispatch(fetchCourses());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
