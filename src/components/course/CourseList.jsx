@@ -20,9 +20,9 @@ const CourseList = () => {
 
   const filterCourses = debounce((searchQuery) => {
     if (searchQuery.trim() === "") {
-      setFilterData(courses);
+      setFilterData(Object.values(courses));
     } else {
-      const filtered = courses.filter(
+      const filtered = Object.values(courses).filter(
         (course) =>
           course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           course.instructor.toLowerCase().includes(searchQuery.toLowerCase())

@@ -79,10 +79,16 @@ const CourseDetails = () => {
               disabled={isExist}
               onClick={handleEnroll}
               className={` pb-2.5 pt-2 px-4 rounded-lg text-white text-md font-medium ${
-                isExist ? "bg-gray-500 opacity-50" : "bg-yellow-500"
+                isExist || course?.enrollmentStatus === "Closed"
+                  ? "bg-gray-500 opacity-50 text-red-700 cursor-default"
+                  : "bg-yellow-500"
               }`}
             >
-              {isExist ? "Already Enrolled" : "Enroll Now"}
+              {isExist
+                ? "Already Enrolled"
+                : course?.enrollmentStatus === "Closed"
+                ? "Enrollment Closed"
+                : "Enroll Now"}
             </button>
           </div>
           <div className="flex flex-col py-6 gap-2">

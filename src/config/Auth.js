@@ -1,5 +1,6 @@
+import { toast } from "react-toastify";
 import store from "../store/store";
-import { setUser } from "../store/user/user.slice";
+import { clearUser, setUser } from "../store/user/user.slice";
 import { auth, provider } from "./firebase";
 
 export const handleGoogleLogin = () => {
@@ -22,6 +23,12 @@ export const handleGoogleLogin = () => {
     });
 };
 
-export const singOut = () => {
+export const singOut = (dispatch) => {
   auth.signOut();
+  localStorage.clear("user");
+  dispatch(clearUser());
+  toast.success("Logged out", {
+    position: "top-right",
+    autoClose: 3000, // Auto-close in 3 seconds
+  });
 };

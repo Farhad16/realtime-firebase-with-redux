@@ -8,7 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LoginIcon from "@mui/icons-material/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const pages = [
   { name: "Home", link: "/" },
@@ -19,6 +19,7 @@ const pages = [
 const Navbar = () => {
   const user = useSelector((state) => state.user.user);
   const [anchorEl, setAnchorEl] = useState(null);
+  const dispatch = useDispatch();
 
   const handleAvatarClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -95,7 +96,7 @@ const Navbar = () => {
               {user ? (
                 <p
                   className="text-sm flex gap-2 items-center cursor-pointer"
-                  onClick={singOut}
+                  onClick={() => singOut(dispatch)}
                 >
                   <LogoutIcon />
                   Logout

@@ -1,6 +1,7 @@
 import React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import LinearProgress from "@mui/material/LinearProgress";
+import { updateCourseStatus } from "../../services/firebase";
 
 function StudentCourseList({
   name,
@@ -9,8 +10,8 @@ function StudentCourseList({
   thumbnail,
   isCompleted,
   progress,
+  enrollId,
 }) {
-  const handleCheckboxChange = () => {};
   return (
     <div className="box-shadow flex flex-col p-6 rounded-xl group transition duration-300 ease-in-out w-full">
       <div className="flex flex-row gap-4">
@@ -21,7 +22,7 @@ function StudentCourseList({
         />
         <div className="flex flex-col gap-1 w-full">
           <p className="font-bold text-base">{name}</p>
-          <p className="text-sm text-gray-500">Instructor - {instructor}</p>
+          <p className="text-sm text-gray-500">{instructor}</p>
           <p className="text-sm font-semibold">Duration - {duration}</p>
           <div className="flex flex-col gap-1 mt-3">
             <p className="text-blue-600 text-xs font-medium">
@@ -36,10 +37,11 @@ function StudentCourseList({
         </div>
       </div>
 
-      <div className="flex items-center text-sm gap-1">
+      <div className="flex items-center text-[13px] gap-1">
         <Checkbox
-          checked={true}
-          onChange={handleCheckboxChange}
+          disabled={isCompleted}
+          checked={isCompleted}
+          onChange={() => updateCourseStatus(enrollId)}
           color="primary"
         />
         <span>{isCompleted ? "Completed" : "Mark as completed"}</span>

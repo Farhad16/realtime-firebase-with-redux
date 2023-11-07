@@ -1,6 +1,9 @@
 // src/store/course/courseSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCourseByStudent } from "../../services/firebase";
+import {
+  fetchCourseByStudent,
+  subscribeToCourseListByStudent,
+} from "../../services/firebase";
 
 const studentSlice = createSlice({
   name: "student",
@@ -20,17 +23,13 @@ const studentSlice = createSlice({
 
 export const { setCourses, setLoading } = studentSlice.actions;
 
-// Create an async thunk to fetch data and dispatch the setCourses action
-export const fetchStudentCourses = () => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    const data = await fetchCourseByStudent();
+export const subscribeCoursesByStudent = () => (dispatch) => {
+  dispatch(setLoading(true));
+
+  subscribeToCourseListByStudent((data) => {
     dispatch(setCourses(data));
     dispatch(setLoading(false));
-  } catch (error) {
-    // Handle errors here
-    console.error("Error:", error);
-  }
+  });
 };
 
 export default studentSlice.reducer;

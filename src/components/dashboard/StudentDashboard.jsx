@@ -12,12 +12,12 @@ const StudentDashboard = () => {
   const courseGenericStructure = useMemo(() => {
     return courses
       ? Object.keys(courses).map((key) => ({
-          uniqueId: key,
+          enrollId: key,
           ...courses[key],
         }))
       : [];
   }, [courses]);
-
+  console.log(courseGenericStructure);
   return (
     <div className="flex flex-col gap-4 min-h-screen flex-grow py-6">
       <h1 className="text-xl font-medium">Your Courses</h1>

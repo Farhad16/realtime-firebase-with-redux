@@ -7,12 +7,12 @@ import CourseList from "./components/course/CourseList";
 import CourseDetails from "./components/course/CourseDetails";
 import { Provider } from "react-redux";
 import store from "./store/store";
-import { fetchCourses } from "./store/course/course.slice";
 import ErrorPage from "./components/ErrorPage";
 import StudentDashboard from "./components/dashboard/StudentDashboard";
-import { fetchStudentCourses } from "./store/student-course/student.slice";
+import { subscribeCoursesByStudent } from "./store/student-course/student.slice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { subscribeCourses } from "./store/course/course.slice";
 
 const router = createBrowserRouter([
   {
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-store.dispatch(fetchCourses());
-store.dispatch(fetchStudentCourses());
+store.dispatch(subscribeCoursesByStudent());
+store.dispatch(subscribeCourses());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

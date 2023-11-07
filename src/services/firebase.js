@@ -1,27 +1,16 @@
 import { toast } from "react-toastify";
 
-// utils/fetchData.js
-export async function fetchData() {
-  try {
-    const response = await fetch(
-      "https://alemeno-1-default-rtdb.firebaseio.com/courseList.json",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+import { ref, onValue } from "firebase/database";
+import { firebaseApp } from "../config/firebase";
 
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
+const database = firebaseApp.database();
 
-    const data = await response.json();
-    return data; // Modify the response data as needed
-  } catch (error) {
-    throw error;
-  }
+export function subscribeToCourseList(callback) {
+  const courseListRef = ref(database, "courseList");
+  onValue(courseListRef, (snapshot) => {
+    const data = snapshot.val();
+    callback(data);
+  });
 }
 
 export const registerInCourse = async (course, studentDetails) => {
@@ -83,24 +72,39 @@ export const registerInCourse = async (course, studentDetails) => {
     });
 };
 
-export async function fetchCourseByStudent() {
+export async function subscribeToCourseListByStudent(callback) {
+  const courseListRef = ref(database, "enrollList");
+  onValue(courseListRef, (snapshot) => {
+    const data = snapshot.val();
+    callback(data);
+  });
+}
+
+export async function updateCourseStatus(uniqueId) {
   try {
-    const response = await fetch(
-      "https://alemeno-1-default-rtdb.firebaseio.com/enrollList.json",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const updateUrl = `https://alemeno-1-default-rtdb.firebaseio.com/enrollList/${uniqueId}.json`;
+
+    const data = {
+      isCompleted: true,
+      progress: 100,
+    };
+
+    const response = await fetch(updateUrl, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
 
-    const data = await response.json();
-    return data; // Modify the response data as needed
+    toast.success("Mark as completed successfully", {
+      position: "top-right",
+      autoClose: 3000, // Auto-close in 3 seconds
+    });
   } catch (error) {
     throw error;
   }
