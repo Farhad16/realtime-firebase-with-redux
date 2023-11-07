@@ -55,3 +55,7 @@ code {
 .MuiAccordion-root {
   background-color: transparent !important;
 }
+
+.MuiCheckbox-root {
+  padding: 0px !important;
+}

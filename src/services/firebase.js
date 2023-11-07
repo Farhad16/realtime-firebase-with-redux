@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 // utils/fetchData.js
 export async function fetchData() {
   try {
@@ -27,6 +29,8 @@ export const registerInCourse = async (course, studentDetails) => {
   const enrollDetails = {
     ...studentDetails,
     ...course,
+    progress: Math.round(Math.random() * 90),
+    isCompleted: false,
   };
 
   const firebaseUrl =
@@ -68,6 +72,10 @@ export const registerInCourse = async (course, studentDetails) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(enrollDetails),
+      });
+      toast.success("Course enrollment success", {
+        position: "top-right",
+        autoClose: 3000, // Auto-close in 3 seconds
       });
     })
     .catch((error) => {

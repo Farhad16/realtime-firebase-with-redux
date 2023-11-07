@@ -11,6 +11,8 @@ import { fetchCourses } from "./store/course/course.slice";
 import ErrorPage from "./components/ErrorPage";
 import StudentDashboard from "./components/dashboard/StudentDashboard";
 import { fetchStudentCourses } from "./store/student-course/student.slice";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <ToastContainer />
     </Provider>
   </React.StrictMode>
 );

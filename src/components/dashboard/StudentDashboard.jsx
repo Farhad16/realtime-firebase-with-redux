@@ -20,8 +20,8 @@ const StudentDashboard = () => {
 
   return (
     <div className="flex flex-col gap-4 min-h-screen flex-grow py-6">
-      <h1 className="text-xl">Your Courses</h1>
-      <div className="flex flex-col gap-4 w-full items-center justify-center">
+      <h1 className="text-xl font-medium">Your Courses</h1>
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-4 w-full items-center justify-center">
         {isLoading ? (
           <CircularProgress />
         ) : (
