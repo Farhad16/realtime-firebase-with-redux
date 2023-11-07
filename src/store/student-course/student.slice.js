@@ -1,6 +1,6 @@
 // src/store/course/courseSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCourseByStudent, fetchData } from "../../services/firebase";
+import { fetchCourseByStudent } from "../../services/firebase";
 
 const studentSlice = createSlice({
   name: "student",

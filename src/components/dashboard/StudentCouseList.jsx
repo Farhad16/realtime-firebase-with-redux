@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -6,9 +6,7 @@ function StudentCourseList({
   name,
   instructor,
   duration,
-  id,
   thumbnail,
-  enrollmentStatus,
   isCompleted,
   progress,
 }) {

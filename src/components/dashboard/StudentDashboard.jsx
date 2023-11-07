@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { CircularProgress } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { CircularProgress } from "@mui/material";
+import React, { useMemo } from "react";
+import { useSelector } from "react-redux";
 import StudentCourseList from "./StudentCouseList";
 
 const StudentDashboard = () => {
-  const user = useSelector((state) => state.user.user);
+  // const user = useSelector((state) => state.user.user);
   const courses = useSelector((state) => state.student.courses);
   const isLoading = useSelector((state) => state.student.loading);
 
