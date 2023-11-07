@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Accordion,
@@ -8,13 +8,40 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
+import { registerInCourse } from "../../services/firebase";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const courses = useSelector((state) => state.course.courses);
   const isLoading = useSelector((state) => state.course.loading);
+  const user = useSelector((state) => state.user.user);
+  const [isExist, setIsExist] = useState(false);
 
-  const course = courses.filter((course) => course.id === Number(id))[0];
+  const courseGenericStructure = useMemo(() => {
+    return courses
+      ? Object.keys(courses).map((key) => ({
+          uniqueId: key,
+          ...courses[key],
+        }))
+      : [];
+  }, [courses]);
+
+  const course = courseGenericStructure.filter(
+    (course) => course.id === Number(id)
+  )[0];
+
+  useEffect(() => {
+    if (course && user) {
+      const isExist = course.students.filter(
+        (student) => student.email === user.email
+      )[0];
+      setIsExist(isExist);
+    }
+  }, [user, course]);
+
+  const handleEnroll = () => {
+    registerInCourse(course, user);
+  };
 
   return (
     <>
@@ -22,7 +49,7 @@ const CourseDetails = () => {
         <CircularProgress className="absolute right-[50%] top-[50%]" />
       ) : (
         <div className="flex flex-col sm:flex-row gap-6 sm:gap-12">
-          <div className="flex flex-col py-6 gap-2">
+          <div className="flex flex-col py-6 gap-3">
             <img
               src={`/images/${course.thumbnail}.jpg`}
               alt="img"
@@ -48,6 +75,15 @@ const CourseDetails = () => {
               <p className="text-blue-600">{course?.location}</p>
             </div>
             <p>Enrolled - {course?.students.length} students</p>
+            <button
+              disabled={isExist}
+              onClick={handleEnroll}
+              className={` pb-2.5 pt-2 px-4 rounded-lg text-white text-md font-medium ${
+                isExist ? "bg-gray-500 opacity-50" : "bg-yellow-500"
+              }`}
+            >
+              {isExist ? "Already Enrolled" : "Enroll Now"}
+            </button>
           </div>
           <div className="flex flex-col py-6 gap-2">
             <p className="font-semibold text-xl">{course?.name}</p>

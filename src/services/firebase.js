@@ -16,18 +16,24 @@ export async function fetchData() {
     }
 
     const data = await response.json();
-    return Object.values(data); // Modify the response data as needed
+    return data; // Modify the response data as needed
   } catch (error) {
     throw error;
   }
 }
 
-export const registerInCourse = async (courseId, studentDetails) => {
+export const registerInCourse = async (course, studentDetails) => {
+  const { uniqueId } = course;
+  const enrollDetails = {
+    ...studentDetails,
+    ...course,
+  };
+
   const firebaseUrl =
     "https://alemeno-1-default-rtdb.firebaseio.com/courseList/";
 
   // Fetch the current course data
-  fetch(`${firebaseUrl}${courseId}.json`)
+  fetch(`${firebaseUrl}${uniqueId}.json`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -44,7 +50,7 @@ export const registerInCourse = async (courseId, studentDetails) => {
       courseData.students.push(studentDetails);
 
       // Send a PUT request to update the course with the new 'students' array
-      return fetch(`${firebaseUrl}${courseId}.json`, {
+      return fetch(`${firebaseUrl}${uniqueId}.json`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -56,9 +62,38 @@ export const registerInCourse = async (courseId, studentDetails) => {
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-      console.log("New student added successfully");
+      fetch("https://alemeno-1-default-rtdb.firebaseio.com/enrollList.json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(enrollDetails),
+      });
     })
     .catch((error) => {
       console.error("Error:", error);
     });
 };
+
+export async function fetchCourseByStudent() {
+  try {
+    const response = await fetch(
+      "https://alemeno-1-default-rtdb.firebaseio.com/enrollList.json",
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    return data; // Modify the response data as needed
+  } catch (error) {
+    throw error;
+  }
+}

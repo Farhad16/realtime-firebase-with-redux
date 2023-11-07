@@ -13,7 +13,7 @@ const CourseList = () => {
   const [filterData, setFilterData] = useState([]);
 
   useEffect(() => {
-    setFilterData(courses);
+    setFilterData(Object.values(courses));
   }, [courses]);
 
   const { control } = useForm();
