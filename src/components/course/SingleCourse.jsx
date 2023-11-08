@@ -18,10 +18,12 @@ function SingleCourse({
   uniqueId,
 }) {
   const user = useSelector((state) => state.user.user);
-  const likeGiven = likes.find((like) => like.email === user?.email);
-  const dislikeGiven = dislikes.find(
-    (dislike) => dislike.email === user?.email
-  );
+  const likeGiven = user
+    ? likes.find((like) => like.email === user?.email)
+    : "";
+  const dislikeGiven = user
+    ? dislikes.find((dislike) => dislike.email === user?.email)
+    : "";
 
   const handlelikes = () => {
     if (!user) {
