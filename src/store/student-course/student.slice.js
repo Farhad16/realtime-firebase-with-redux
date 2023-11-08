@@ -24,7 +24,7 @@ const studentSlice = createSlice({
 export const { setCourses, setLoading, clearCourse } = studentSlice.actions;
 
 export const subscribeCoursesByStudent = () => (dispatch) => {
-  const storedUser = JSON.parse(localStorage.getItem("user")) || "";
+  const storedUser = JSON.parse(localStorage.getItem("user")) || {};
 
   dispatch(setLoading(true));
 
@@ -35,10 +35,11 @@ export const subscribeCoursesByStudent = () => (dispatch) => {
           ...data[key],
         }))
       : [];
-    const filterByEmail =
-      courseGenericStructure.filter(
-        (course) => course.email === storedUser?.email
-      ) || [];
+    const filterByEmail = storedUser.email
+      ? courseGenericStructure.filter(
+          (course) => course.email === storedUser?.email
+        )
+      : [];
 
     dispatch(setCourses(filterByEmail));
     dispatch(setLoading(false));

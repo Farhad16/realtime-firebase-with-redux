@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
@@ -18,12 +18,15 @@ function SingleCourse({
   uniqueId,
 }) {
   const user = useSelector((state) => state.user.user);
-  const likeGiven = user
-    ? likes.find((like) => like.email === user?.email)
-    : "";
-  const dislikeGiven = user
-    ? dislikes.find((dislike) => dislike.email === user?.email)
-    : "";
+  const [like, setlike] = useState(false);
+  const [disLike, setDisIslike] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setlike(likes.some((like) => like.email === user.email));
+      setDisIslike(dislikes.some((like) => like.email === user.email));
+    }
+  }, [user, dislikes, likes]);
 
   const handlelikes = () => {
     if (!user) {
@@ -33,7 +36,7 @@ function SingleCourse({
       });
       return;
     }
-    userLikes(uniqueId, user, likeGiven);
+    userLikes(uniqueId, user, like);
   };
 
   const handledislikes = () => {
@@ -44,7 +47,7 @@ function SingleCourse({
       });
       return;
     }
-    userdislikes(uniqueId, user, dislikeGiven);
+    userdislikes(uniqueId, user, disLike);
   };
 
   return (
@@ -84,14 +87,14 @@ function SingleCourse({
         <div className="flex flex-col gap-1">
           <ThumbUpIcon
             onClick={() => handlelikes()}
-            style={{ fill: likeGiven ? "blue" : "", cursor: "pointer" }}
+            style={{ fill: like ? "blue" : "", cursor: "pointer" }}
           />
           {likes?.length} Likes
         </div>
         <div className="flex flex-col gap-1">
           <ThumbDownIcon
             onClick={() => handledislikes()}
-            style={{ fill: dislikeGiven ? "blue" : "", cursor: "pointer" }}
+            style={{ fill: disLike ? "blue" : "", cursor: "pointer" }}
           />
           {dislikes?.length} Dislikes
         </div>
