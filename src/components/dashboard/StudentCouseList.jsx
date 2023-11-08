@@ -18,7 +18,7 @@ function StudentCourseList({
 
   const handleUpdateStatus = () => {
     if (!user) {
-      toast.error("Please login before you mark", {
+      toast.error("Please login before you mark as completed", {
         position: "top-right",
         autoClose: 3000,
       });

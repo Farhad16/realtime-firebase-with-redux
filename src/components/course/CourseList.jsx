@@ -4,7 +4,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import SingleCourse from "./SingleCourse";
 import debounce from "lodash/debounce";
 import { CircularProgress } from "@mui/material";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import { useSelector } from "react-redux";
 import NotFound from "../NotFound";
 

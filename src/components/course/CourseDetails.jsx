@@ -23,7 +23,7 @@ const CourseDetails = () => {
   useEffect(() => {
     if (course && user) {
       const isExist = course.students.filter(
-        (student) => student.email === user.email
+        (student) => student.email === user?.email
       )[0];
       setIsExist(isExist);
     }
@@ -31,7 +31,7 @@ const CourseDetails = () => {
 
   const handleEnroll = () => {
     if (!user) {
-      toast.error("Please login before you dislike", {
+      toast.error("Please login before you enroll", {
         position: "top-right",
         autoClose: 3000,
       });

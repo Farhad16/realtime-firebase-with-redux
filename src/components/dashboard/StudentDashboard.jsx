@@ -24,7 +24,7 @@ const StudentDashboard = () => {
                   ))}
                 </div>
               ) : (
-                <NotFound content="Result not found of you didn't enroll yet" />
+                <NotFound content="Result not found or you didn't enroll yet" />
               )}
             </>
           )}
