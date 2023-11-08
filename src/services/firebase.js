@@ -13,7 +13,7 @@ export function subscribeToCourseList(callback) {
   });
 }
 
-export const registerInCourse = async (course, studentDetails) => {
+export const enrollCourse = async (course, studentDetails) => {
   const { uniqueId } = course;
   const enrollDetails = {
     ...studentDetails,
@@ -103,7 +103,7 @@ export async function updateCourseStatus(uniqueId) {
 
     toast.success("Mark as completed successfully", {
       position: "top-right",
-      autoClose: 3000, // Auto-close in 3 seconds
+      autoClose: 3000,
     });
   } catch (error) {
     throw error;

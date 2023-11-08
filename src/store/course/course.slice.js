@@ -24,7 +24,13 @@ export const subscribeCourses = () => (dispatch) => {
   dispatch(setCoursesLoading(true));
 
   subscribeToCourseList((data) => {
-    dispatch(setCourses(data));
+    const courseGenericStructure = data
+      ? Object.keys(data).map((key) => ({
+          uniqueId: key,
+          ...data[key],
+        }))
+      : [];
+    dispatch(setCourses(courseGenericStructure));
     dispatch(setCoursesLoading(false));
   });
 };

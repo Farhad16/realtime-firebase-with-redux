@@ -16,6 +16,10 @@ export const handleGoogleLogin = () => {
       };
       store.dispatch(setUser(signedInUser));
       localStorage.setItem("user", JSON.stringify(signedInUser));
+      toast.success("Login success", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     })
     .catch((error) => {
       // Handle errors
@@ -27,7 +31,7 @@ export const singOut = (dispatch) => {
   auth.signOut();
   localStorage.clear("user");
   dispatch(clearUser());
-  toast.success("Logged out", {
+  toast.error("Logged out", {
     position: "top-right",
     autoClose: 3000, // Auto-close in 3 seconds
   });

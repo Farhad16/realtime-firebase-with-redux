@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Accordion,
@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
-import { registerInCourse } from "../../services/firebase";
+import { enrollCourse } from "../../services/firebase";
 import { toast } from "react-toastify";
 
 const CourseDetails = () => {
@@ -18,18 +18,7 @@ const CourseDetails = () => {
   const user = useSelector((state) => state.user.user);
   const [isExist, setIsExist] = useState(false);
 
-  const courseGenericStructure = useMemo(() => {
-    return courses
-      ? Object.keys(courses).map((key) => ({
-          uniqueId: key,
-          ...courses[key],
-        }))
-      : [];
-  }, [courses]);
-
-  const course = courseGenericStructure.filter(
-    (course) => course.id === Number(id)
-  )[0];
+  const course = courses.filter((course) => course.id === Number(id))[0];
 
   useEffect(() => {
     if (course && user) {
@@ -48,7 +37,7 @@ const CourseDetails = () => {
       });
       return;
     }
-    registerInCourse(course, user);
+    enrollCourse(course, user);
   };
 
   return (

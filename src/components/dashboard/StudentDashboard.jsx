@@ -1,23 +1,13 @@
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import { CircularProgress } from "@mui/material";
-import React, { useMemo } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import StudentCourseList from "./StudentCouseList";
 
 const StudentDashboard = () => {
-  // const user = useSelector((state) => state.user.user);
   const courses = useSelector((state) => state.student.courses);
   const isLoading = useSelector((state) => state.student.loading);
 
-  const courseGenericStructure = useMemo(() => {
-    return courses
-      ? Object.keys(courses).map((key) => ({
-          enrollId: key,
-          ...courses[key],
-        }))
-      : [];
-  }, [courses]);
-  console.log(courseGenericStructure);
   return (
     <div className="flex flex-col gap-4 min-h-screen flex-grow py-6">
       <h1 className="text-xl font-medium">Your Courses</h1>
@@ -26,8 +16,8 @@ const StudentDashboard = () => {
           <CircularProgress />
         ) : (
           <>
-            {courseGenericStructure.length ? (
-              courseGenericStructure.map((course) => (
+            {courses.length ? (
+              courses.map((course) => (
                 <StudentCourseList {...course} key={course.id} />
               ))
             ) : (

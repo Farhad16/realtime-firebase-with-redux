@@ -1,9 +1,6 @@
 // src/store/course/courseSlice.js
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  fetchCourseByStudent,
-  subscribeToCourseListByStudent,
-} from "../../services/firebase";
+import { subscribeToCourseListByStudent } from "../../services/firebase";
 
 const studentSlice = createSlice({
   name: "student",
@@ -27,7 +24,13 @@ export const subscribeCoursesByStudent = () => (dispatch) => {
   dispatch(setLoading(true));
 
   subscribeToCourseListByStudent((data) => {
-    dispatch(setCourses(data));
+    const courseGenericStructure = data
+      ? Object.keys(data).map((key) => ({
+          enrollId: key,
+          ...data[key],
+        }))
+      : [];
+    dispatch(setCourses(courseGenericStructure));
     dispatch(setLoading(false));
   });
 };

@@ -2,6 +2,8 @@ import React from "react";
 import Checkbox from "@mui/material/Checkbox";
 import LinearProgress from "@mui/material/LinearProgress";
 import { updateCourseStatus } from "../../services/firebase";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function StudentCourseList({
   name,
@@ -12,6 +14,19 @@ function StudentCourseList({
   progress,
   enrollId,
 }) {
+  const user = useSelector((state) => state.user.user);
+
+  const handleUpdateStatus = () => {
+    if (!user) {
+      toast.error("Please login before you mark", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+    updateCourseStatus(enrollId);
+  };
+
   return (
     <div className="box-shadow flex flex-col p-6 rounded-xl group transition duration-300 ease-in-out w-full">
       <div className="flex flex-row gap-4">
@@ -41,7 +56,7 @@ function StudentCourseList({
         <Checkbox
           disabled={isCompleted}
           checked={isCompleted}
-          onChange={() => updateCourseStatus(enrollId)}
+          onChange={() => handleUpdateStatus()}
           color="primary"
         />
         <span>{isCompleted ? "Completed" : "Mark as completed"}</span>
