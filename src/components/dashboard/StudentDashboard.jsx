@@ -19,8 +19,8 @@ const StudentDashboard = () => {
             <>
               {courses.length ? (
                 <div className="grid md:grid-cols-2 grid-cols-1 gap-4 w-full items-center justify-center">
-                  {courses.map((course) => (
-                    <StudentCourseList {...course} key={course.id} />
+                  {courses.map((course, i) => (
+                    <StudentCourseList {...course} key={i} />
                   ))}
                 </div>
               ) : (

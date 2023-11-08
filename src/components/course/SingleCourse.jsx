@@ -30,6 +30,8 @@ function SingleCourse({
 
   const handlelikes = () => {
     if (!user) {
+      console.log("click inn", user);
+
       toast.error("Please login before you like", {
         position: "top-right",
         autoClose: 3000,
@@ -51,10 +53,7 @@ function SingleCourse({
   };
 
   return (
-    <div
-      to={`/course-details/${id}`}
-      className="box-shadow flex justify-between gap-4 p-6 rounded-xl group transition duration-300 ease-in-out w-full"
-    >
+    <div className="box-shadow flex sm:flex-row flex-col justify-between gap-4 p-6 rounded-xl group transition duration-300 ease-in-out w-full">
       <Link
         to={`/course-details/${id}`}
         className="flex xs:flex-row flex-col xs:gap-8 gap-4"
@@ -83,20 +82,30 @@ function SingleCourse({
           </div>
         </div>
       </Link>
-      <div className="flex gap-4 flex-row text-[10px] font-medium">
-        <div className="flex flex-col gap-1">
-          <ThumbUpIcon
-            onClick={() => handlelikes()}
-            style={{ fill: like ? "blue" : "", cursor: "pointer" }}
-          />
-          {likes?.length} Likes
-        </div>
-        <div className="flex flex-col gap-1">
-          <ThumbDownIcon
-            onClick={() => handledislikes()}
-            style={{ fill: disLike ? "blue" : "", cursor: "pointer" }}
-          />
-          {dislikes?.length} Dislikes
+      <div className="flex-col justify-between">
+        <div className="flex gap-4 flex-row text-[10px] font-medium">
+          <div className="flex flex-col gap-1 items-center">
+            <ThumbUpIcon
+              onClick={handlelikes}
+              style={{
+                fill: like ? "blue" : "",
+                cursor: "pointer",
+                fontSize: "20px",
+              }}
+            />
+            {likes?.length} Likes
+          </div>
+          <div className="flex flex-col gap-1 items-center">
+            <ThumbDownIcon
+              onClick={handledislikes}
+              style={{
+                fill: disLike ? "blue" : "",
+                cursor: "pointer",
+                fontSize: "20px",
+              }}
+            />
+            {dislikes?.length} Dislikes
+          </div>
         </div>
       </div>
     </div>

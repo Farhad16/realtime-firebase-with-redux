@@ -86,9 +86,11 @@ const Navbar = () => {
             className="md:hidden flex items-center"
           >
             {pages.map((page) => (
-              <MenuItem key={page} onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">{page.name}</Typography>
-              </MenuItem>
+              <Link to={page.link} key={page.name}>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
+                </MenuItem>
+              </Link>
             ))}
           </Menu>
         </Box>
