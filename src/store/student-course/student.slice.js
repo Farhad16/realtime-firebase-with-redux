@@ -15,12 +15,17 @@ const studentSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    clearCourse: (state) => {
+      state.courses = [];
+    },
   },
 });
 
-export const { setCourses, setLoading } = studentSlice.actions;
+export const { setCourses, setLoading, clearCourse } = studentSlice.actions;
 
 export const subscribeCoursesByStudent = () => (dispatch) => {
+  const storedUser = JSON.parse(localStorage.getItem("user")) || "";
+
   dispatch(setLoading(true));
 
   subscribeToCourseListByStudent((data) => {
@@ -30,7 +35,12 @@ export const subscribeCoursesByStudent = () => (dispatch) => {
           ...data[key],
         }))
       : [];
-    dispatch(setCourses(courseGenericStructure));
+    const filterByEmail =
+      courseGenericStructure.filter(
+        (course) => course.email === storedUser?.email
+      ) || [];
+
+    dispatch(setCourses(filterByEmail));
     dispatch(setLoading(false));
   });
 };

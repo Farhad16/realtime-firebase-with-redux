@@ -2,6 +2,10 @@ import { toast } from "react-toastify";
 import store from "../store/store";
 import { clearUser, setUser } from "../store/user/user.slice";
 import { auth, provider } from "./firebase";
+import {
+  clearCourse,
+  subscribeCoursesByStudent,
+} from "../store/student-course/student.slice";
 
 export const handleGoogleLogin = () => {
   auth
@@ -20,6 +24,7 @@ export const handleGoogleLogin = () => {
         position: "top-right",
         autoClose: 3000,
       });
+      store.dispatch(subscribeCoursesByStudent());
     })
     .catch((error) => {
       // Handle errors
@@ -35,4 +40,5 @@ export const singOut = (dispatch) => {
     position: "top-right",
     autoClose: 3000, // Auto-close in 3 seconds
   });
+  store.dispatch(clearCourse());
 };

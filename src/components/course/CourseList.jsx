@@ -6,6 +6,7 @@ import debounce from "lodash/debounce";
 import { CircularProgress } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import { useSelector } from "react-redux";
+import NotFound from "../NotFound";
 
 const CourseList = () => {
   const courses = useSelector((state) => state.course.courses);
@@ -57,7 +58,7 @@ const CourseList = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col gap-4 w-full items-center justify-center">
+      <div className="flex flex-col gap-4 w-full items-center justify-center mt-6">
         {isLoading ? (
           <CircularProgress />
         ) : (
@@ -67,13 +68,7 @@ const CourseList = () => {
                 <SingleCourse {...course} key={course.id} />
               ))
             ) : (
-              <div className="text-center">
-                <SentimentVeryDissatisfiedIcon
-                  fontSize="large"
-                  className="text-gray-400"
-                />
-                <p className="text-gray-600 mt-2">No results found</p>
-              </div>
+              <NotFound content="No result found" />
             )}
           </>
         )}

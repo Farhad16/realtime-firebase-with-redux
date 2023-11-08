@@ -156,8 +156,8 @@ const Navbar = () => {
             <div className="flex flex-col p-4 gap-2 font-medium">
               {user && (
                 <div className="flex flex-col text-sm ml-1">
-                  <p className="font-medium">{user.name}</p>
-                  <p className="text-xs opacity-50">{user.email}</p>
+                  <p className="font-medium">{user?.name}</p>
+                  <p className="text-xs opacity-50">{user?.email}</p>
                 </div>
               )}
               <p className="text-sm flex gap-2 items-center cursor-pointer">
