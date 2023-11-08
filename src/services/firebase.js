@@ -109,3 +109,81 @@ export async function updateCourseStatus(uniqueId) {
     throw error;
   }
 }
+
+export const userLikes = async (uniqueId, likerDetails, isLikes) => {
+  try {
+    const details = { ...likerDetails };
+    const firebaseUrl = `https://alemeno-1-default-rtdb.firebaseio.com/courseList/${uniqueId}.json`;
+
+    const response = await fetch(firebaseUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const courseData = await response.json();
+
+    if (!courseData.likes) {
+      courseData.likes = [];
+    }
+
+    if (isLikes) {
+      courseData.likes = courseData.likes.filter(
+        (like) => like.email !== details.email
+      );
+    } else {
+      courseData.likes.push(details);
+    }
+
+    const putResponse = await fetch(firebaseUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    });
+
+    if (!putResponse.ok) {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+export const userdislikes = async (uniqueId, dislikerDetails, isdislike) => {
+  try {
+    const details = { ...dislikerDetails };
+    const firebaseUrl = `https://alemeno-1-default-rtdb.firebaseio.com/courseList/${uniqueId}.json`;
+
+    const response = await fetch(firebaseUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const courseData = await response.json();
+
+    if (!courseData.dislikes) {
+      courseData.dislikes = [];
+    }
+
+    if (isdislike) {
+      courseData.dislikes = courseData.dislikes.filter(
+        (dislike) => dislike.email !== details.email
+      );
+    } else {
+      courseData.dislikes.push(details);
+    }
+
+    const putResponse = await fetch(firebaseUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(courseData),
+    });
+
+    if (!putResponse.ok) {
+      throw new Error("Network response was not ok");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};

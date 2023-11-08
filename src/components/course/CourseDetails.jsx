@@ -9,6 +9,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector } from "react-redux";
 import { registerInCourse } from "../../services/firebase";
+import { toast } from "react-toastify";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -40,6 +41,13 @@ const CourseDetails = () => {
   }, [user, course]);
 
   const handleEnroll = () => {
+    if (!user) {
+      toast.error("Please login before you dislike", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
     registerInCourse(course, user);
   };
 

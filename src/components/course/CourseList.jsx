@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import SearchIcon from "@mui/icons-material/Search";
 import SingleCourse from "./SingleCourse";
@@ -12,17 +12,26 @@ const CourseList = () => {
   const isLoading = useSelector((state) => state.course.loading);
   const [filterData, setFilterData] = useState([]);
 
-  useEffect(() => {
-    setFilterData(Object.values(courses));
+  const genericCourse = useMemo(() => {
+    return courses
+      ? Object.keys(courses).map((key) => ({
+          uniqueId: key,
+          ...courses[key],
+        }))
+      : [];
   }, [courses]);
+
+  useEffect(() => {
+    setFilterData(genericCourse);
+  }, [genericCourse]);
 
   const { control } = useForm();
 
   const filterCourses = debounce((searchQuery) => {
     if (searchQuery.trim() === "") {
-      setFilterData(Object.values(courses));
+      setFilterData(genericCourse);
     } else {
-      const filtered = Object.values(courses).filter(
+      const filtered = genericCourse.filter(
         (course) =>
           course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           course.instructor.toLowerCase().includes(searchQuery.toLowerCase())
